@@ -1,1 +1,6 @@
-workstation.14.nasa
+[server]
+ldap ansible_host=ldap.14.nasa
+
+[workstation]
+ws1 ansible_host=workstation1.14.nasa
+ws2 ansible_host=172.16.14.34 HOSTNAME=ws2.14.nasa

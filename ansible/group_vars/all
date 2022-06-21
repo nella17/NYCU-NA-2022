@@ -1,0 +1,3 @@
+ca_file: ca-14-nasa.crt
+ldap_server: ldap.14.nasa
+ldap_base_dn: dc=14,dc=nasa

@@ -1,0 +1,2 @@
+- import_playbook: workstation.yml
+- import_playbook: server.yml

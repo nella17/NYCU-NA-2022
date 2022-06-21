@@ -1,0 +1,9 @@
+- name: install ldap-utils
+  ansible.builtin.package:
+    name: ldap-utils
+    state: present
+
+- name: copy ldap.conf
+  ansible.builtin.template:
+    src: ldap.conf.j2
+    dest: /etc/ldap/ldap.conf

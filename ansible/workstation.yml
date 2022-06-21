@@ -1,0 +1,4 @@
+- hosts: workstation
+  roles:
+    - ldap-client-libpam
+    - hostname

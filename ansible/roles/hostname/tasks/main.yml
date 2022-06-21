@@ -1,0 +1,3 @@
+- name: set ansible_host to hostname
+  ansible.builtin.hostname:
+    name: "{{ HOSTNAME | default(ansible_host) }}"

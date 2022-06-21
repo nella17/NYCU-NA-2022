@@ -1,0 +1,51 @@
+- name: install ldap-utils
+  ansible.builtin.package:
+    name: libpam-ldapd
+    state: present
+
+- name: copy nsswitch.conf
+  ansible.builtin.copy:
+    src: nsswitch.conf
+    dest: /etc/nsswitch.conf
+  notify:
+    - restart nscd
+    - restart nslcd
+
+- name: copy nslcd.conf
+  ansible.builtin.template:
+    src: nslcd.conf.j2
+    dest: /etc/nslcd.conf
+  notify:
+    - restart nscd
+    - restart nslcd
+
+- name: copy ssh-keyldap
+  ansible.builtin.copy:
+    src: ssh-keyldap
+    dest: /usr/local/bin/ssh-keyldap
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: copy sshd_config
+  ansible.builtin.copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+  notify: restart sshd
+
+- name: copy pam.d/common-session
+  ansible.builtin.copy:
+    src: common-session
+    dest: /etc/pam.d/common-session
+
+- name: install sudo-ldap
+  ansible.builtin.package:
+    name: sudo-ldap
+    state: present
+  environment:
+    SUDO_FORCE_REMOVE: "yes"
+
+- name: copy sudo-ldap.conf
+  ansible.builtin.template:
+    src: sudo-ldap.conf.j2
+    dest: /etc/sudo-ldap.conf

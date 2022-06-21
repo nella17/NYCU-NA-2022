@@ -1,0 +1,5 @@
+- name: copy CA file
+  ansible.builtin.copy:
+    src: "{{ ca_file }}"
+    dest: /usr/local/share/ca-certificates/
+  notify: update CA certificates
