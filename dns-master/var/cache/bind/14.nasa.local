@@ -1,0 +1,10 @@
+$INCLUDE "14.nasa.shared"
+
+$ORIGIN 14.nasa.
+
+@                       NS      ns.14.nasa.
+                        A       172.16.14.2
+
+ns                      A       172.16.14.2
+resolver                A       172.16.14.10
+router                  A       172.16.14.254

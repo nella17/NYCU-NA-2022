@@ -1,0 +1,50 @@
+$ORIGIN .
+$TTL 3600   ; 1 hour
+
+14.nasa                 IN SOA  14.nasa. admin.14.nasa. (
+                                79         ; serial
+                                86400      ; refresh (1 day)
+                                1800       ; retry (30 minutes)
+                                604800     ; expire (1 week)
+                                7200       ; minimum (2 hours)
+                                )
+
+$ORIGIN 14.nasa.
+$TTL 3600   ; 1 hour
+
+ns1             A       172.16.14.1
+ns2             A       172.16.14.2
+
+agent           A       172.16.14.123
+nasa            CNAME   nasa.cs.nctu.edu.tw.
+
+jumphost        A       172.16.14.16
+client          A       172.16.14.17
+
+@               MX      10 mail
+@               TXT     "v=spf1 mx ip4:172.16.14.20 -all"
+mail            A       172.16.14.20
+mail            TXT     "v=spf1 a -all"
+_dmarc          TXT     "v=DMARC1; p=reject; rua=dmarc@14.nasa"
+dkim._domainkey IN TXT ( "v=DKIM1; k=rsa; "
+                "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDWgpeAqjKflfp7n5RWQUSsODXjgc92MX6w+qTxchDUrevOaoz9SccosgDtaNaLaGN5rYyTuHybmqlGV1ZoE2p+IKYjgqOmsz270zYgETRuU+7Jb8ae3Lp6X+bkbYbtjomJh2eBPBH5ICU1b7Z/XLR2ocJVvFvdEa8hZ0UBccl7aQIDAQAB" ) ;
+
+cert            TXT     (
+                            "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJlVENDQVIrZ0F3SUJBZ0lVTnZQQWp3eWVt"
+                            "cWpZYkdWMVRKcmZLSDVUd00wd0NnWUlLb1pJemowRUF3SXcKRWpFUU1BNEdBMVVFQXd3SE1UUWdi"
+                            "bUZ6WVRBZUZ3MHlNakExTVRJeE16RTFNREJhRncwek1qQTFNRGt4TXpFMQpNREJhTUJJeEVEQU9C"
+                            "Z05WQkFNTUJ6RTBJRzVoYzJFd1dUQVRCZ2NxaGtqT1BRSUJCZ2dxaGtqT1BRTUJCd05DCkFBUkF3"
+                            "WnEzRzdQdlg3Y1QxQVFmeTd3NnJGeFVkNU9PNlRNVW9ZU0JRZC9aRC9sZE9BbUw2Y3dhZzdFWlBk"
+                            "ajIKN2NoZ0hoZzh0M1ZuWldPQzk2NG9XUHczbzFNd1VUQWRCZ05WSFE0RUZnUVVwMFQzN21MMWFt"
+                            "OS9ldU93dFoyRwpETFJnY2E4d0h3WURWUjBqQkJnd0ZvQVVwMFQzN21MMWFtOS9ldU93dFoyR0RM"
+                            "UmdjYTh3RHdZRFZSMFRBUUgvCkJBVXdBd0VCL3pBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlFQWxZ"
+                            "WmVHOHY1UGwzZFZNb0VpRS9wbFZXc2pYRzMKcnMyeWdjWisxUDdWYVdRQ0lFK0hvRHZOK0pTdmty"
+                            "N0VMKzNPSDQ2S1B5Nkk4NlZvc3dXL1hYRzRLa1Z4Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+                        );
+
+ldap            A       172.16.14.32
+workstation     A       172.16.14.33
+workstation1    A       172.16.14.33
+workstation2    A       172.16.14.34
+
+$INCLUDE "14.nasa.sshfp"

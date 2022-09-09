@@ -1,0 +1,2 @@
+/Subject: .*NCTU.*/ REJECT no NCTU
+/Subject: .*(6Zm95Lqk|=E9=99=BD=E4=BA=A4=).*/ REJECT no 陽交

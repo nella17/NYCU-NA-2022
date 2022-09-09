@@ -1,0 +1,68 @@
+compatibility_level = 2
+dir = /etc/postfix/maps
+
+biff = no
+
+myhostname = mail.14.nasa
+mydomain = 14.nasa
+myorigin = $mydomain
+mydestination = localhost
+relayhost = 
+
+virtual_mailbox_domains = $mydomain
+virtual_mailbox_base = /home/vmail
+virtual_mailbox_maps = hash:${dir}/virtual_mailbox
+virtual_alias_domains = $myhostname
+virtual_alias_maps = pcre:${dir}/virtual_alias-pcre hash:${dir}/virtual_alias-hash
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+
+sender_canonical_maps = hash:${dir}/sender_canonical
+# sender_canonical_classes = envelope_sender, header_sender
+
+# mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mynetworks_style = host
+
+smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+smtpd_client_restrictions = permit_sasl_authenticated check_policy_service inet:127.0.0.1:10023
+# reject_unauth_pipelining 
+
+# smtpd_sender_restrictions = reject_unknown_sender_domain check_sender_access hash:${dir}/vmailbox reject_sender_login_mismatch
+smtpd_sender_restrictions = reject_authenticated_sender_login_mismatch check_sender_access hash:${dir}/sender_access
+smtpd_sender_login_maps = pcre:${dir}/sender_login
+smtpd_recipient_restrictions = permit_mynetworks permit_auth_destination
+
+smtpd_tls_cert_file = /etc/ssl/mail.pem
+smtpd_tls_key_file = /etc/ssl/mail.key
+smtpd_tls_security_level = encrypt
+
+append_at_myorigin = yes
+remote_header_rewrite_domain = domain.invalid
+masquerade_domains = $mydomain
+masquerade_classes = envelope_sender, header_sender, header_recipient
+masquerade_exceptions = admin, root
+
+mail_spool_directory = /var/mail/
+mailbox_size_limit = 0
+
+header_checks = pcre:${dir}/header_checks
+content_filter = amavisfeed:[127.0.0.1]:10024
+smtpd_milters = inet:localhost:11332
+# smtpd_milters = unix:/var/lib/rspamd/milter.sock
+
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+
+notify_classes = bounce, 2bounce, protocol, resource, software
+# debug_peer_list = 14.nasa
+# soft_bounce = yes

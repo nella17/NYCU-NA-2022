@@ -1,0 +1,13 @@
+root root/
+report root/
+postmaster root/
+double-bounce root/
+virusalert root/
+
+log log/
+
+meow meow/
+
+ta ta/
+nasata ta/
+cool-ta cool-ta/
